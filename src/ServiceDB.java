@@ -113,13 +113,15 @@ public class ServiceDB {
                 case ('1'):
                     System.out.println("Digite a nota do aluno");
                     BigDecimal nota= Main.sc.nextBigDecimal();
-                    System.out.println("TOAQUI");
+                    Main.sc.nextLine();
                     addGrade(con,id_aluno,nota);
                     // TO-DO levar a algum outro método passando a con e o id para fazer query
                     break;
                 case ('2'):
-                    System.out.println("Digite o id do aluno e o id da nota que deseja apagar");
-                    // TO-DO levar a algum outro método passando a con e o id para fazer query
+                    System.out.println("Digite o id da nota que deseja apagar");
+                    int id_nota = Main.sc.nextInt();
+                    Main.sc.nextLine();
+                    removeGrade(con,id_aluno,id_nota);
                     break;
                 case ('3'):
                     sair=true;
@@ -141,9 +143,26 @@ public class ServiceDB {
             else{
                 System.out.println("Houve algum erro na inserção da nota, tente novamente");
             }
-
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
+
+    public void removeGrade(Connection con, int id_aluno, int id_nota){
+        String sql = "DELETE FROM NOTA WHERE id_aluno = (?) AND id_nota = (?)";
+        try{
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1,id_aluno);
+            pstm.setInt(2,id_nota);
+            if(pstm.executeUpdate()>0){
+                System.out.printf("A nota de id (%d) foi removido com sucesso para o aluno (%d)\n",id_nota,id_aluno);
+            }
+            else{
+                System.out.println("Houve algum erro na remoção da nota, tente novamente\n");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }
