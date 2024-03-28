@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d836918b-5f70-4f11-a14b-9cb514eb782b" name="Changes" comment="Commit inicial do projeto e set">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ServiceDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServiceDB.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +38,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-selecionar-aluno",
+    "git-widget-placeholder": "feature-adicionar-nota-aluno",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/exati/Documents/CRUD",
     "onboarding.tips.debug.path": "/home/exati/Documents/CRUD/src/Main.java",

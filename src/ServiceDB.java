@@ -39,7 +39,7 @@ public class ServiceDB {
                 e.printStackTrace();
             }
             // menu de opcoes dos alunos
-            System.out.println("O que você deseja fazer ?");
+            System.out.println("-- O que você deseja fazer? -- ");
             System.out.println("1 - selecionar aluno");
             System.out.println("2 - remover aluno");
             System.out.println("3 - voltar");
@@ -97,6 +97,32 @@ public class ServiceDB {
             System.out.println("\n");
         }catch(SQLException e){
             e.printStackTrace();
+        }
+    }
+    public void menuStudent(Connection con){
+        boolean sair = false;
+        // menu de opcoes para um aluno
+        System.out.println("-- O que você deseja fazer? -- ");
+        System.out.println("1 - adicionar nota");
+        System.out.println("2 - remover nota");
+        System.out.println("3 - voltar");
+        char option = Main.sc.next().charAt(0);
+        while (!sair){
+            switch (option){
+                case ('1'):
+                    System.out.println("Digite o id do aluno e sua nota");
+                    int id = Main.sc.nextInt();
+                    // TO-DO levar a algum outro método passando a con e o id para fazer query
+                    break;
+                case ('2'):
+                    System.out.println("Digite o id do aluno e o id da nota que deseja apagar");
+                    // TO-DO levar a algum outro método passando a con e o id para fazer query
+                    break;
+                case ('3'):
+                    sair=true;
+                    System.out.println("\n");
+                    break;
+            }
         }
     }
 }
