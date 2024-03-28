@@ -16,13 +16,10 @@ public class Main {
             char option = sc.next().charAt(0);
             switch(option){
                 case '1':
-
-                    System.out.println("Digite o id do aluno:");
-                    int id = sc.nextInt();
                     sc.nextLine();
                     System.out.println("Digite o nome do aluno:");
                     String nome = sc.nextLine();
-                    serv.addStudent(con.con,id,nome);
+                    serv.addStudent(con.con,nome);
                     System.out.println("Aluno adicionado com sucesso.");
                     break;
                 case '2':
@@ -38,7 +35,6 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opção inváida.");
-
             }
         }
 
