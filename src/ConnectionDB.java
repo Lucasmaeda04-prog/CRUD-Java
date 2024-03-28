@@ -25,14 +25,4 @@ public class ConnectionDB {
             System.out.println(e.getMessage());
         }
     }
-    public void execQuery(String sql){
-        try{
-            Statement st = con.createStatement();
-            st.executeQuery(sql);
-        }
-        catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-    }
-
 }
