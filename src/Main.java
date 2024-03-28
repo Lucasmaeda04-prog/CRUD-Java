@@ -5,7 +5,8 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        ConnectionDB db = new ConnectionDB();
+        ConnectionDB con = new ConnectionDB();
+        ServiceDB serv = new ServiceDB();
         boolean sair = false;
         Scanner sc = new Scanner(System.in);
         System.out.println(":::BEM VINDO AO SISTEMA DE ALUNOS ::::");
@@ -14,13 +15,19 @@ public class Main {
             System.out.println("O que você deseja fazer ?");
             System.out.println(" 1 - Adicionar alunos\n 2 - Listar alunos\n 3 - Ver maior nota\n 4 - sair");
             char option = sc.next().charAt(0);
-
             switch(option){
                 case '1':
+
+                    System.out.println("Digite o id do aluno:");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Digite o nome do aluno:");
+                    String nome = sc.nextLine();
+                    serv.addStudent(con,id,nome);
                     System.out.println("Aluno adicionado com sucesso.");
                     break;
                 case '2':
-                    System.out.println("ALUNOS - ");
+                    serv.showStudents(con);
                     break;
                 case '3':
                     System.out.println("Maior nota");
@@ -28,6 +35,7 @@ public class Main {
                 case '4':
                     System.out.println("Até breve!");
                     sair = true;
+                    con.closeConnection();
                     break;
                 default:
                     System.out.println("Opção inváida.");
