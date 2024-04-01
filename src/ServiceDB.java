@@ -19,6 +19,29 @@ public class ServiceDB {
             e.printStackTrace();
         }
     }
+    public void removeStudent(Connection con, int id_aluno){
+
+        String sql = "DELETE FROM NOTA WHERE id_aluno = (?)";
+        try{
+            // apagando as notas do aluno
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1,id_aluno);
+            pstm.execute();
+            // apagando o aluno da tabela de alunos
+            sql = "DELETE FROM ALUNO WHERE id_aluno = (?)";
+            pstm = con.prepareStatement(sql);
+            pstm.setInt(1,id_aluno);
+            if(pstm.executeUpdate()>0){
+                System.out.println("Aluno foi removido com sucesso");
+            }
+            else{
+                System.out.println("Houve algum erro, tente novamente");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
     public void showStudents(Connection con){
         String sql =  "SELECT * FROM aluno";
@@ -189,26 +212,5 @@ public class ServiceDB {
             e.printStackTrace();
         }
     }
-    public void removeStudent(Connection con, int id_aluno){
 
-        String sql = "DELETE FROM NOTA WHERE id_aluno = (?)";
-        try{
-            // apagando as notas do aluno
-            PreparedStatement pstm = con.prepareStatement(sql);
-            pstm.setInt(1,id_aluno);
-            pstm.execute();
-            // apagando o aluno da tabela de alunos
-            sql = "DELETE FROM ALUNO WHERE id_aluno = (?)";
-            pstm = con.prepareStatement(sql);
-            pstm.setInt(1,id_aluno);
-            if(pstm.executeUpdate()>0){
-                System.out.println("Aluno foi removido com sucesso");
-            }
-            else{
-                System.out.println("Houve algum erro, tente novamente");
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
 }
