@@ -3,9 +3,11 @@ import java.sql.*;
 import java.sql.PreparedStatement;
 
 public class ServiceDB {
-    String sql = "";
+    private static final BigDecimal MIN_GRADE = new BigDecimal("0");
+    private static final BigDecimal MAX_GRADE = new BigDecimal("10");
+
     public void addStudent(Connection con, String nome){
-        sql = "INSERT INTO aluno (nome) VALUES (?)";
+        String sql = "INSERT INTO aluno (nome) VALUES (?)";
         try{
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1,nome);
@@ -19,7 +21,7 @@ public class ServiceDB {
     }
 
     public void showStudents(Connection con){
-        sql =  "SELECT * FROM aluno";
+        String sql =  "SELECT * FROM aluno";
         boolean sair = false;
 
         while(!sair){
@@ -64,10 +66,10 @@ public class ServiceDB {
             }
         }
     }
-    public void selectStudent(Connection con, int id_aluno){
+
+    public void showStudentGrades(Connection con,int id_aluno){
         String sql_statics = "SELECT COUNT(id_nota) as qnt_nota, AVG(nota) as media, MAX(nota) as nota_max FROM nota WHERE id_aluno = (?) GROUP BY (id_aluno)";
         String sql_grades = "SELECT id_nota, nota FROM nota WHERE id_aluno = (?)";
-
 
         try{
             // preparando a query
@@ -93,19 +95,34 @@ public class ServiceDB {
                     BigDecimal nota = rs_grades.getBigDecimal("nota");
                     System.out.printf("Id_nota:(%d) | Nota: %.2f\n",id_nota,nota);
                 };
+                System.out.println("\n");
             }else {
-                System.out.println("Não há nenhuma nota para esse id_aluno");
+                System.out.println("Não há nenhuma nota para esse id_aluno\n");
             }
-            System.out.println("\n");
-            menuStudent(con,id_aluno);
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
-    public void menuStudent(Connection con, int id_aluno){
-        boolean sair = false;
-        // menu de opcoes para um aluno
 
+    public void selectStudent(Connection con, int id_aluno){
+        boolean sair = false;
+
+        try{
+            // query para verificar se aluno existe
+            String sql_checkStudent = "SELECT * FROM aluno WHERE id_aluno = (?)";
+            PreparedStatement pstm_check = con.prepareStatement(sql_checkStudent);
+            pstm_check.setInt(1,id_aluno);
+            ResultSet rs_check = pstm_check.executeQuery();
+            if(!rs_check.next()){ // aluno inexistente
+                System.out.println("Esse aluno não existe, verifique o id digitado\n");
+                return;
+            } // aluno existe, mostar suas notas
+            showStudentGrades(con,id_aluno);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        // menu de opcoes para um aluno
         while (!sair){
             System.out.println("-- O que você deseja fazer? -- ");
             System.out.println("1 - adicionar nova nota");
@@ -117,14 +134,19 @@ public class ServiceDB {
                     System.out.println("Digite a nota do aluno");
                     BigDecimal nota= Main.sc.nextBigDecimal();
                     Main.sc.nextLine();
-                    addGrade(con,id_aluno,nota);
-                    // TO-DO levar a algum outro método passando a con e o id para fazer query
+                    if (nota.compareTo(MIN_GRADE) >= 0 && nota.compareTo(MAX_GRADE) <= 0) {
+                        addGrade(con,id_aluno,nota);
+                        showStudentGrades(con,id_aluno);
+                    } else {
+                        System.out.println("A nota deve estar entre 0 e 10\n");
+                    }
                     break;
                 case ('2'):
                     System.out.println("Digite o id da nota que deseja apagar");
                     int id_nota = Main.sc.nextInt();
                     Main.sc.nextLine();
                     removeGrade(con,id_aluno,id_nota);
+                    showStudentGrades(con,id_aluno);
                     break;
                 case ('3'):
                     sair=true;
@@ -186,7 +208,7 @@ public class ServiceDB {
                 System.out.println("Houve algum erro, tente novamente");
             }
         }catch (SQLException e){
-
+            e.printStackTrace();
         }
     }
 }

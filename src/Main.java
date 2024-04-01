@@ -12,7 +12,7 @@ public class Main {
 
         while(!sair){
             System.out.println("-- O que você deseja fazer? --");
-            System.out.println(" 1 - Adicionar alunos\n 2 - Listar alunos\n 3 - Ver maior nota\n 4 - sair");
+            System.out.println(" 1 - Adicionar alunos\n 2 - Listar alunos\n 3 - sair");
             char option = sc.next().charAt(0);
             switch(option){
                 case '1':
@@ -22,13 +22,12 @@ public class Main {
                     serv.addStudent(con.con,nome);
                     System.out.println("Aluno adicionado com sucesso.");
                     break;
+
                 case '2':
                     serv.showStudents(con.con);
                     break;
+
                 case '3':
-                    System.out.println("Maior nota");
-                    break;
-                case '4':
                     System.out.println("Até breve!");
                     sair = true;
                     con.closeConnection();
