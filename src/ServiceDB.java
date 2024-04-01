@@ -43,16 +43,19 @@ public class ServiceDB {
             System.out.println("2 - remover aluno");
             System.out.println("3 - voltar");
             char option = Main.sc.next().charAt(0);
+            int id;
             switch (option){
                 case ('1'):
                     System.out.println("Digite o id do aluno");
-                    int id = Main.sc.nextInt();
+                    id = Main.sc.nextInt();
+                    Main.sc.nextLine();
                     selectStudent(con,id);
-                    // TO-DO levar a algum outro método passando a con e o id para fazer query
                     break;
                 case ('2'):
                     System.out.println("Digite o id do aluno");
-                    // TO-DO levar a algum outro método passando a con e o id para fazer query
+                    id = Main.sc.nextInt();
+                    Main.sc.nextLine();
+                    removeStudent(con,id);
                     break;
                 case ('3'):
                     sair=true;
@@ -164,5 +167,26 @@ public class ServiceDB {
             e.printStackTrace();
         }
     }
+    public void removeStudent(Connection con, int id_aluno){
 
+        String sql = "DELETE FROM NOTA WHERE id_aluno = (?)";
+        try{
+            // apagando as notas do aluno
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1,id_aluno);
+            pstm.execute();
+            // apagando o aluno da tabela de alunos
+            sql = "DELETE FROM ALUNO WHERE id_aluno = (?)";
+            pstm = con.prepareStatement(sql);
+            pstm.setInt(1,id_aluno);
+            if(pstm.executeUpdate()>0){
+                System.out.println("Aluno foi removido com sucesso");
+            }
+            else{
+                System.out.println("Houve algum erro, tente novamente");
+            }
+        }catch (SQLException e){
+
+        }
+    }
 }
