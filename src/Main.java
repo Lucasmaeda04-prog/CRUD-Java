@@ -3,10 +3,10 @@
 import java.util.*;
 public class Main {
     public static Scanner sc = new Scanner(System.in);
-
     public static void main(String[] args) {
         ConnectionDB con = new ConnectionDB();
         ServiceDB serv = new ServiceDB();
+        Application app = new Application();
         boolean sair = false;
         System.out.println("::: BEM VINDO AO SISTEMA DE ALUNOS ::::");
 
@@ -19,12 +19,11 @@ public class Main {
                     sc.nextLine();
                     System.out.println("Digite o nome do aluno:");
                     String nome = sc.nextLine();
-                    serv.addStudent(con.con,nome);
-                    System.out.println("Aluno adicionado com sucesso.");
+                    app.addStudent(con.con,nome);
                     break;
 
                 case '2':
-                    serv.showStudents(con.con);
+                    app.showStudents(con.con);
                     break;
 
                 case '3':
